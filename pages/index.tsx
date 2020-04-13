@@ -1,5 +1,5 @@
-import Slider from "rc-slider";
-import { MouseEvent, useRef, useState } from "react";
+import Slider from "@material-ui/core/Slider";
+import { MouseEvent, useRef, useState, ChangeEvent } from "react";
 
 import { Markers as MarkersTypes } from "../lib/types";
 import { HeadMatter } from "../components/HeadMatter";
@@ -36,7 +36,8 @@ export default () => {
     }
   };
 
-  const handleChangeSlider = (value: number) => {
+  const handleChangeSlider = (event: any, newValue: number | number[]) => {
+    const value = newValue as number
     setSize(value);
 
     if (active) {
@@ -66,28 +67,33 @@ export default () => {
         <div className="bg-gray-200 p-8">
           <Slider
             value={getActiveMarker() ? getActiveMarker()?.size : size}
+            min={20}
+            max={50}
             onChange={handleChangeSlider}
           />
-          <Marker
-            size={25}
-            color="#3f51b5"
-            onClick={(event: any) => handleClickShape(event, "single")}
-            active={variant === "single"}
-            style={{
-              marginRight: 10,
-              display: "inline-block",
-            }}
-          />
-          <Marker
-            size={25}
-            color="#3f51b5"
-            onClick={(event: any) => handleClickShape(event, "double")}
-            variant="double"
-            active={variant === "double"}
-            style={{
-              display: "inline-block",
-            }}
-          />
+          <div className="flex justify-center">
+            <Marker
+              size={25}
+              color="#3f51b5"
+              onClick={(event: any) => handleClickShape(event, "single")}
+              active={variant === "single"}
+              style={{
+                marginRight: 10,
+                display: "inline-block",
+              }}
+            />
+            <Marker
+              size={25}
+              color="#3f51b5"
+              onClick={(event: any) => handleClickShape(event, "double")}
+              variant="double"
+              active={variant === "double"}
+              style={{
+                display: "inline-block",
+              }}
+            />
+          </div>
+
         </div>
         <div className="relative flex-1 h-full bg-gray-100">
           <img

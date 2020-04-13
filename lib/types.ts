@@ -4,6 +4,7 @@ export type Marker = {
   y: number;
   color: string;
   size: number;
+  variant: string;
 };
 
 export type Markers = Marker[];

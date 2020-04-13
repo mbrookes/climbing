@@ -1,82 +1,41 @@
-import { motion } from "framer-motion";
-import { Dispatch, RefObject, SetStateAction } from "react";
-
-import { Marker as MarkerProps , Markers} from "../lib/types";
+import React, { MouseEvent, CSSProperties } from "react";
 
 export const Marker = ({
-  marker,
-  imageRef,
+  color,
   active,
-  setActive,
-  markers,
-  setMarkers
+  size,
+  variant,
+  onClick,
+  style
 }: {
-  marker: MarkerProps;
-  imageRef: RefObject<HTMLImageElement>;
-  active: string | undefined;
-  setActive: Dispatch<SetStateAction<string | undefined>>;
-  markers: Markers
-  setMarkers: Dispatch<SetStateAction<Markers>>
+  active?: boolean;
+  color: string;
+  size: number;
+  variant?: string;
+  onClick?: any
+  style?: CSSProperties
 }) => {
 
-const handleDrag = (e: any) => {
-  const rect = imageRef.current?.getBoundingClientRect();
-
-  if (rect) {
-    const x = (e.clientX - rect.left) / (rect.width);
-    const y = (e.clientY - rect.top) / (rect.height);  
-
-    const newMarkers = markers.map((marker) => marker.key == active ? { ...marker, x, y } : marker);
-    setMarkers(newMarkers);
-  }
-}
-
-  const getMarkerXPos = (x: number) => {
-    const rect = imageRef.current?.getBoundingClientRect();
-
-    if (rect) {
-      const px = x * rect.width + rect.left;
-      return px - marker.size / 2;
-    }
-  };
-
-  const getMarkerYPos = (y: number) => {
-    const rect = imageRef.current?.getBoundingClientRect();
-
-    if (rect) {
-      const px = y * rect.height;
-      return px - marker.size / 2;
-    }
-  };
+  const circle = (size: number, color: string, shrink = -1) => (
+    <circle
+      cx={size / 2}
+      cy={size / 2}
+      r={size / 2 + shrink}
+      style={{
+        stroke: color,
+        strokeWidth: 2,
+        fill: 'transparent'
+      }}
+    />
+  )
 
   return (
-    <motion.div
-      onClick={() => setActive(marker.key)}
-      drag={true}
-      dragMomentum={false}
-      onDrag={handleDrag}
-      className={`no-transform absolute cursor-pointer ${
-        active === marker.key && "shadow-outline rounded-full cursor-move"
-      }`}
-      style={{
-        width: marker.size,
-        height: marker.size,
-        left: getMarkerXPos(marker.x),
-        top: getMarkerYPos(marker.y),
-      }}
-    >
-      <svg width={marker.size} height={marker.size}>
-        <circle
-          cx={marker.size / 2}
-          cy={marker.size / 2}
-          r={marker.size / 2 - 1}
-          style={{
-            stroke: marker.color,
-            strokeWidth: 2,
-            fill: "transparent",
-          }}
-        />
+    <div onClick={onClick} style={style}
+      className={`${active && "rounded-full shadow-outline cursor-move"}`}>
+      <svg width={size} height={size}>
+        {circle(size, color)}
+        {variant === 'double' && circle(size, color, -5)}
       </svg>
-    </motion.div>
+    </div>
   );
 };

@@ -61,13 +61,13 @@ export const DraggableMarker = ({
       drag={true}
       dragMomentum={false}
       onDrag={handleDrag}
-      className="no-transform absolute cursor-pointer"
+      className="no-transform absolute"
       style={{
         left: getMarkerXPos(marker.x),
         top: getMarkerYPos(marker.y),
       }}
     >
-      <Marker color={color} size={size} variant={variant} active={active === marker.key} />
+      <Marker color={color} size={size} variant={variant} active={active === marker.key} className="cursor-move" />
     </motion.div>
   );
 };

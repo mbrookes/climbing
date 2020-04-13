@@ -1,19 +1,19 @@
 import React, { MouseEvent, CSSProperties } from "react";
 
 export const Marker = ({
+  className,
   color,
   active,
   size,
   variant,
   onClick,
-  style
 }: {
   active?: boolean;
+  className?: string;
   color: string;
   size: number;
   variant?: string;
-  onClick?: any
-  style?: CSSProperties
+  onClick?: any;
 }) => {
 
   const circle = (size: number, color: string, shrink = -1) => (
@@ -30,8 +30,10 @@ export const Marker = ({
   )
 
   return (
-    <div onClick={onClick} style={style}
-      className={`${active && "rounded-full shadow-outline cursor-move"}`}>
+    <div
+      onClick={onClick}
+      className={`cursor-pointer ${active && "rounded-full shadow-outline"} ${className}`}
+    >
       <svg width={size} height={size}>
         {circle(size, color)}
         {variant === 'double' && circle(size, color, -5)}

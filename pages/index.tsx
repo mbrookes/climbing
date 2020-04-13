@@ -85,10 +85,6 @@ export default () => {
               color="#3f51b5"
               onClick={(event: any) => handleClickShape(event, "single")}
               active={variant === "single"}
-              style={{
-                marginRight: 10,
-                display: "inline-block",
-              }}
             />
             <Marker
               size={25}
@@ -96,9 +92,6 @@ export default () => {
               onClick={(event: any) => handleClickShape(event, "double")}
               variant="double"
               active={variant === "double"}
-              style={{
-                display: "inline-block",
-              }}
             />
           </div>
           <IconButton onClick={handleClickDelete}><DeleteIcon /></IconButton>

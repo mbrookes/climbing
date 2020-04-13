@@ -11,7 +11,7 @@ import { LockBody } from '../components/LockBody'
 export default () => {
   const [markers, setMarkers] = useState<MarkersTypes>([]);
   const [active, setActive] = useState<string>();
-  const [size, setSize] = useState(24);
+  const [size, setSize] = useState(35);
   const [variant, setVariant] = useState("single");
 
   const imageRef = useRef<HTMLImageElement>(null);
@@ -31,7 +31,7 @@ export default () => {
       const y = (e.clientY - rect.top) / (rect.height);
       const color = 'red'
 
-      setMarkers([...markers, { key, x, y, color, size: 24, variant }]);
+      setMarkers([...markers, { key, x, y, color, size, variant }]);
       setActive(key);
     }
   };

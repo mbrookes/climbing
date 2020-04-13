@@ -1,13 +1,13 @@
-import { ReactNode} from 'react'
+import { ReactNode } from 'react'
 
-export const LockBody = ({children}: {children: ReactNode}) => (
+export const LockBody = ({ children }: { children: ReactNode }) => (
     <>
-    {children}
-    <style jsx global>{`
+        {children}
+        <style jsx global>{`
         body {
             overflow: hidden;
         }
     `}
-    </style>
-</>
+        </style>
+    </>
 )

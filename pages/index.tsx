@@ -25,7 +25,7 @@ export default () => {
       const y = (e.clientY - rect.top) / (rect.height);
       const color = 'red'
 
-      setMarkers([...markers, { key, x, y, color, size, variant }]);
+      setMarkers([...markers, { key, x, y, color, size: 24, variant }]);
       setActive(key);
     }
   };
@@ -53,7 +53,7 @@ export default () => {
 
     if (active) {
       const newMarkers = markers.map((marker) => {
-        return marker.key == active ? { ...marker, shape: value } : marker;
+        return marker.key == active ? { ...marker, variant: value } : marker;
       });
       setMarkers(newMarkers);
     }

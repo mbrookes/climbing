@@ -1,6 +1,7 @@
+import { MouseEvent, useRef, useState } from "react";
 import Slider from "@material-ui/core/Slider";
-import { MouseEvent, useRef, useState, ChangeEvent } from "react";
-
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
 import { Markers as MarkersTypes } from "../lib/types";
 import { HeadMatter } from "../components/HeadMatter";
 import { DraggableMarker } from "../components/DraggableMarker";
@@ -13,8 +14,13 @@ export default () => {
   const [size, setSize] = useState(24);
   const [variant, setVariant] = useState("single");
 
-
   const imageRef = useRef<HTMLImageElement>(null);
+
+  const getActiveMarker = () => {
+    if (active) {
+      return markers.find((marker) => marker.key === active);
+    }
+  };
 
   const handleClickImg = (e: MouseEvent<HTMLImageElement>) => {
     const rect = imageRef.current?.getBoundingClientRect();
@@ -27,12 +33,6 @@ export default () => {
 
       setMarkers([...markers, { key, x, y, color, size: 24, variant }]);
       setActive(key);
-    }
-  };
-
-  const getActiveMarker = () => {
-    if (active) {
-      return markers.find((marker) => marker.key === active);
     }
   };
 
@@ -49,12 +49,20 @@ export default () => {
   };
 
   function handleClickShape(event: MouseEvent<HTMLDivElement>, value: string) {
-    event.stopPropagation()
     setVariant(value);
 
     if (active) {
       const newMarkers = markers.map((marker) => {
         return marker.key == active ? { ...marker, variant: value } : marker;
+      });
+      setMarkers(newMarkers);
+    }
+  };
+
+  function handleClickDelete(event: any) {
+    if (active) {
+      const newMarkers = markers.filter((marker) => {
+        return marker.key !== active;
       });
       setMarkers(newMarkers);
     }
@@ -93,7 +101,7 @@ export default () => {
               }}
             />
           </div>
-
+          <IconButton onClick={handleClickDelete}><DeleteIcon /></IconButton>
         </div>
         <div className="relative flex-1 h-full bg-gray-100">
           <img
